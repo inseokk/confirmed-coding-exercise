@@ -1,5 +1,13 @@
 # React + TypeScript + Vite
 
+**Part B — Repo viewer:** This app displays the normalized repository data produced by the C# console app. It loads `repos.json` from `public/` (or copy from `../console-app/repos.json` after running the console app). Features: search by name/description, sort by stars/name/updated.
+
+- **Run:** `npm run dev`
+- **Build:** `npm run build`
+- **Preview build:** `npm run preview`
+
+---
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
