@@ -3,7 +3,30 @@ import type { RepositorySummary } from './types/repo';
 import { RepoList } from './components/RepoList';
 import './App.css';
 
-const REPOS_JSON_URL = '/repos.json';
+const REPOS_JSON_URL = import.meta.env.VITE_REPOS_JSON_URL ?? '/repos.json';
+const FETCH_RETRY_ATTEMPTS = 3;
+const FETCH_RETRY_DELAY_MS = 1000;
+
+async function fetchWithRetry(
+  url: string,
+  attempts = FETCH_RETRY_ATTEMPTS
+): Promise<Response> {
+  let lastError: Error | null = null;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) return res;
+      if (res.status >= 400 && res.status < 500) throw new Error(`Failed to load: ${res.status} ${res.statusText}`);
+      lastError = new Error(`Failed to load: ${res.status} ${res.statusText}`);
+    } catch (e) {
+      lastError = e instanceof Error ? e : new Error('Failed to load');
+    }
+    if (attempt < attempts) {
+      await new Promise((r) => setTimeout(r, FETCH_RETRY_DELAY_MS * attempt));
+    }
+  }
+  throw lastError;
+}
 
 function App() {
   const [repos, setRepos] = useState<RepositorySummary[] | null>(null);
@@ -17,10 +40,7 @@ function App() {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(REPOS_JSON_URL);
-        if (!res.ok) {
-          throw new Error(`Failed to load: ${res.status} ${res.statusText}`);
-        }
+        const res = await fetchWithRetry(REPOS_JSON_URL);
         const data = await res.json();
         if (!cancelled && Array.isArray(data)) {
           setRepos(data);

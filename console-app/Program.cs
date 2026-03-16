@@ -2,21 +2,38 @@ using System.Text.Json;
 using console_app.Models;
 using console_app.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-// Configuration
+// Configuration: appsettings.json + environment variables (env overrides)
 var config = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: true)
+    .AddEnvironmentVariables()
     .Build();
 
 var outputPath = config["Output:FilePath"] ?? "repos.json";
 var userAgent = config["GitHub:UserAgent"] ?? "Confirmed-Exercise";
 
-// HttpClient (single instance, required User-Agent for GitHub API)
-using var httpClient = new HttpClient();
-httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+// Dependency injection
+var services = new ServiceCollection();
+services.AddLogging(builder =>
+{
+    builder.AddConsole();
+    builder.SetMinimumLevel(LogLevel.Information);
+});
+services.AddSingleton<IConfiguration>(config);
+services.AddHttpClient<GitHubRepoService>(client =>
+{
+    client.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+});
+var provider = services.BuildServiceProvider();
 
-var service = new GitHubRepoService(httpClient, config);
+GitHubRepoService service;
+using (var scope = provider.CreateScope())
+{
+    service = scope.ServiceProvider.GetRequiredService<GitHubRepoService>();
+}
 
 // Parse username from command line (first argument)
 var username = args.Length > 0 ? args[0].Trim() : null;
@@ -25,6 +42,7 @@ if (string.IsNullOrEmpty(username))
 {
     Console.WriteLine("Usage: dotnet run -- <github-username>");
     Console.WriteLine("Example: dotnet run -- octocat");
+    Console.WriteLine("Configuration: appsettings.json and environment variables (e.g. Output__FilePath, GitHub__ApiBaseUrl).");
     return 1;
 }
 

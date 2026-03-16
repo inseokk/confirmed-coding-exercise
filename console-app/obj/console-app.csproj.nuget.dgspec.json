@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\inseo\\Downloads\\confirmed-coding-exercise\\console-app\\console-app.csproj": {}
+    "c:\\Users\\inseo\\Downloads\\confirmed-coding-exercise\\console-app\\console-app.csproj": {}
   },
   "projects": {
-    "C:\\Users\\inseo\\Downloads\\confirmed-coding-exercise\\console-app\\console-app.csproj": {
+    "c:\\Users\\inseo\\Downloads\\confirmed-coding-exercise\\console-app\\console-app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\inseo\\Downloads\\confirmed-coding-exercise\\console-app\\console-app.csproj",
+        "projectUniqueName": "c:\\Users\\inseo\\Downloads\\confirmed-coding-exercise\\console-app\\console-app.csproj",
         "projectName": "console-app",
-        "projectPath": "C:\\Users\\inseo\\Downloads\\confirmed-coding-exercise\\console-app\\console-app.csproj",
+        "projectPath": "c:\\Users\\inseo\\Downloads\\confirmed-coding-exercise\\console-app\\console-app.csproj",
         "packagesPath": "C:\\Users\\inseo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\inseo\\Downloads\\confirmed-coding-exercise\\console-app\\obj\\",
+        "outputPath": "c:\\Users\\inseo\\Downloads\\confirmed-coding-exercise\\console-app\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\inseo\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -52,9 +52,33 @@
               "target": "Package",
               "version": "[9.0.0, )"
             },
+            "Microsoft.Extensions.Configuration.EnvironmentVariables": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Polly": {
+              "target": "Package",
+              "version": "[8.4.2, )"
             }
           },
           "imports": [
