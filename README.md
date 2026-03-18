@@ -72,7 +72,6 @@ npm run dev
 
 ## What I would improve with more time
 
-- **Design note:** Add a short document answering the three design prompts (multi-provider structure, integration concerns, production next steps).
 - **React:** Add filter by primary language and/or expand/collapse per card; improve loading/error UX (e.g. skeleton, retry button).
 - **C#:** Add more unit tests (e.g. pagination behavior, retry behavior); optional integration test against a test GitHub user or mocked server.
 - **DevOps:** Add a simple script or instructions to run the console app and copy repos.json into react-app/public/ for a one-command full demo flow.
